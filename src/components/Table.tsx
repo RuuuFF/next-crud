@@ -1,16 +1,22 @@
+import { EditIcon, TrashIcon } from './Icons'
 import Client from '../core/Client'
 
 interface TableProps {
   clients: Client[]
+  selectedClient?: (client: Client) => void
+  deletedClient?: (client: Client) => void
 }
 
 export default function Table(props: TableProps) {
+  const showActions = props.selectedClient || props.deletedClient
+
   function renderHeader() {
     return (
       <tr>
         <th className='text-left p-4'>Código</th>
         <th className='text-left p-4'>Nome</th>
         <th className='text-left p-4'>Idade</th>
+        {showActions ? <th className='p-4'>Ações</th> : false}
       </tr>
     )
   }
@@ -22,7 +28,38 @@ export default function Table(props: TableProps) {
       <td className='text-left p-4'>{client.id}</td>
       <td className='text-left p-4'>{client.name}</td>
       <td className='text-left p-4'>{client.age}</td>
+      {showActions ? renderActions(client) : false}
     </tr>)
+  }
+
+  function renderActions(client: Client) {
+    return (
+      <td className='flex justify-center'>
+        {props.selectedClient ? (
+          <button className='
+              flex justify-center items-center
+              text-green-600 rounded-full p-2 m-1
+              hover:bg-purple-50
+            '
+            onClick={() => props.selectedClient?.(client)}
+          >
+            {EditIcon}
+          </button>
+        ) : false}
+
+        {props.deletedClient ? (
+          <button className='
+              flex justify-center items-center
+              text-red-500 rounded-full p-2 m-1
+              hover:bg-purple-50
+            '
+            onClick={() => props.deletedClient?.(client)}
+          >
+            {TrashIcon}
+          </button>
+        ) : false}
+      </td>
+    )
   }
 
   return (
