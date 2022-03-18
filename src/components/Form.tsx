@@ -5,6 +5,8 @@ import Entrance from "./Entrance";
 
 interface FormProps {
   client: Client
+  clientChanged?: (client: Client) => void
+  cancel?: () => void
 }
 
 export default function Form(props: FormProps) {
@@ -36,10 +38,16 @@ export default function Form(props: FormProps) {
       />
 
       <div className="flex justify-end mt-4">
-        <Button color="blue">
+        <Button
+          color="blue"
+          onClick={() => props.clientChanged?.(new Client(name, Number(age), id))}
+        >
           {id ? 'Alterar' : 'Salvar'}
         </Button>
-        <Button className="ml-2">
+        <Button
+          className="ml-2"
+          onClick={props.cancel}
+        >
           Cancelar
         </Button>
       </div>
