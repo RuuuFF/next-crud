@@ -5,7 +5,7 @@ import Entrance from "./Entrance";
 
 interface FormProps {
   client: Client
-  clientChanged?: (client: Client) => void
+  changeClient?: (client: Client) => void
   cancel?: () => void
 }
 
@@ -40,7 +40,7 @@ export default function Form(props: FormProps) {
       <div className="flex justify-end mt-4">
         <Button
           color="blue"
-          onClick={() => props.clientChanged?.(new Client(name, Number(age), id))}
+          onClick={() => props.changeClient?.(new Client(name, Number(age), id))}
         >
           {id ? 'Alterar' : 'Salvar'}
         </Button>

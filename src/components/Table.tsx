@@ -3,12 +3,12 @@ import Client from '../core/Client'
 
 interface TableProps {
   clients: Client[]
-  selectedClient?: (client: Client) => void
-  deletedClient?: (client: Client) => void
+  selectClient?: (client: Client) => void
+  deleteClient?: (client: Client) => void
 }
 
 export default function Table(props: TableProps) {
-  const showActions = props.selectedClient || props.deletedClient
+  const showActions = props.selectClient || props.deleteClient
 
   function renderHeader() {
     return (
@@ -35,25 +35,25 @@ export default function Table(props: TableProps) {
   function renderActions(client: Client) {
     return (
       <td className='flex justify-center'>
-        {props.selectedClient ? (
+        {props.selectClient ? (
           <button className='
               flex justify-center items-center
               text-green-600 rounded-full p-2 m-1
               hover:bg-purple-50
             '
-            onClick={() => props.selectedClient?.(client)}
+            onClick={() => props.selectClient?.(client)}
           >
             {EditIcon}
           </button>
         ) : false}
 
-        {props.deletedClient ? (
+        {props.deleteClient ? (
           <button className='
               flex justify-center items-center
               text-red-500 rounded-full p-2 m-1
               hover:bg-purple-50
             '
-            onClick={() => props.deletedClient?.(client)}
+            onClick={() => props.deleteClient?.(client)}
           >
             {TrashIcon}
           </button>
